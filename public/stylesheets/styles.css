@@ -171,6 +171,7 @@ footer div {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 20px 0;
 }
 
 .addBeer form input {
@@ -185,4 +186,14 @@ footer div {
 
 .addBeer button {
   margin-top: 50px;
+}
+
+.addBeer_message {
+  width: 40vw;
+  height: 80px;
+  background-color: rgb(252, 185, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
 }

@@ -1,22 +1,32 @@
 <div class='addBeer'>
-  <form action='/addbeer' method='post'>
+
+  {{#if this.added}}
+    <div class='addBeer_message'>
+      {{this.added}}
+    </div>
+  {{/if}}
+  
+  <form action='/add-beer' method='post'>
     <h1>Add New Beer</h1>
-    <label for='beer_name'>Name:</label>
-    <input type='text' name='beer_name' id='beer_name' required />
-    <label for='beer_tagLine'>Tag Line:</label>
-    <input type='text' name='beer_tagLine' id='beer_tagLine' required />
-    <label for='beer_description'>Description:</label>
-    <input type='text' name='beer_description' id='beer_description' required />
-    <label for='beer_brewersTip'>Brewers Tip:</label>
-    <input type='text' name='beer_brewersTip' id='beer_brewersTip' required />
-    <label for='beer_attenuationLevel'>Attenuation Level:</label>
+    <label for='name'>Name:</label>
+    <input type='text' name='name' id='name' required />
+    <label for='tagline'>Tag Line:</label>
+    <input type='text' name='tagline' id='tagline' required />
+    <label for='description'>Description:</label>
+    <input type='text' name='description' id='description' required />
+    <label for='first_brewed'>First Brewed:</label>
+    <input type='date' name='first_brewed' id='first_brewed' required />
+    <label for='brewers_tips'>Brewers Tip:</label>
+    <input type='text' name='brewers_tips' id='brewers_tips' required />
+    <label for='attenuation_level'>Attenuation Level:</label>
     <input
       type='number'
-      name='beer_attenuationLevel'
-      id='beer_attenuationLevel'
+      step='.1'
+      name='attenuation_level'
+      id='attenuation_level'
     />
-    <label for='beer_contributedBy'>Contributed By:</label>
-    <input type='text' name='beer_contributedBy' id='beer_contributedBy' />
+    <label for='contributed_by'>Contributed By:</label>
+    <input type='text' name='contributed_by' id='contributed_by' />
     <button type='submit'>Create New Beer</button>
   </form>
 </div>
