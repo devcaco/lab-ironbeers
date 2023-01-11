@@ -2,10 +2,8 @@ const express = require('express');
 
 const hbs = require('hbs');
 const path = require('path');
-const PunkAPIWrapper = require('punkapi-javascript-wrapper');
-
 const app = express();
-const punkAPI = new PunkAPIWrapper();
+const port = process.env.PORT || 3000;
 
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
@@ -14,48 +12,49 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
-// Register the location for handlebars partials here:
-
-// ...
-
-// Add the route handlers here:
-
 app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.get('/beers', (req, res) => {
-  punkAPI
-    .getBeers()
-    .then(beers => {
-      beers.splice(25);
-      console.log('Beers from the database: ', { beers: beers });
-      res.render('beers', { beers });
-    })
-    .catch(err => console.log(err));
+app.get('/beers', async (req, res) => {
+  try {
+    const data = await fetch('https://ih-beers-api2.herokuapp.com/beers');
+    const beers = await data.json();
+    beers.splice(25);
+    res.render('beers', { beers });
+  } catch (err) {
+    console.log('Error while Fetching beers ->: ', err);
+  }
 });
 
-app.get('/random-beer', (req, res) => {
-  punkAPI
-    .getRandom()
-    .then(beer => {
-      console.log({ beer });
-      if (!beer[0].image_url) beer[0].image_url = './images/beer.png';
-      res.render('beer_detail', { beer: beer[0] });
-    })
-    .catch(err => console.log(err));
+app.get('/add-beer', (req, res) => {
+  res.render('add_beer', {});
 });
 
-app.get('/beer/:beer_id', (req, res) => {
-  punkAPI
-    .getBeer(req.params.beer_id)
-    .then(beer => {
-      console.log({ beer });
-      if (!beer[0].image_url) beer[0].image_url = './images/beer.png';
-      res.render('beer_detail', { beer: beer[0], goback: true });
-      // res.send(beers);
-    })
-    .catch(err => console.log(err));
+app.get('/random-beer', async (req, res) => {
+  try {
+    const data = await fetch(
+      'https://ih-beers-api2.herokuapp.com/beers/random'
+    );
+    const beer = await data.json();
+    if (!beer.image_url) beer.image_url = './images/beer.png';
+    res.render('beer_detail', { beer });
+  } catch (err) {
+    console.log('Error while fetching random beer ->:', err);
+  }
 });
 
-app.listen(3200, () => console.log('🏃‍ on port 3200'));
+app.get('/beer/:beer_id', async (req, res) => {
+  try {
+    const data = await fetch(
+      `https://ih-beers-api2.herokuapp.com/beers/${req.params.beer_id}`
+    );
+    const beer = await data.json();
+    if (!beer.image_url) beer.image_url = './images/beer.png';
+    res.render('beer_detail', { beer, goback: true });
+  } catch (err) {
+    console.log('Error while fetching beer details ->:', err);
+  }
+});
+
+app.listen(port, () => console.log(`🏃‍ on port ${port}`));

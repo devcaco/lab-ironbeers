@@ -28,6 +28,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
 
 nav {
@@ -151,4 +152,37 @@ footer div {
   align-items: center;
   height: 100%;
   margin-left: 20px;
+}
+
+.addBeer {
+  display: flex;
+  flex-direction: column;
+  width: 60vw;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 60px;
+}
+
+.addBeer form {
+  background-color: #dedede;
+  width: 40vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.addBeer form input {
+  height: 30px;
+  border: 0;
+  width: 400px;
+}
+.addBeer form > * {
+  display: block;
+  margin-top: 10px;
+}
+
+.addBeer button {
+  margin-top: 50px;
 }
